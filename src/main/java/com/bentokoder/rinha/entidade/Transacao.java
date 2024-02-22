@@ -18,7 +18,7 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String tipo;
+    private Tipos tipo;
 
     private String descricao;
 

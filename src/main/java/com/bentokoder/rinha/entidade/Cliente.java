@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "clientes")
 @Table(name = "clientes")
 public class Cliente {
@@ -27,4 +26,10 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transacao> transacoes = new ArrayList<>();
+
+    public Cliente(Integer id, Integer limite, Integer saldo){
+        this.id = id;
+        this.limite = limite;
+        this.saldo = saldo;
+    }
 }
