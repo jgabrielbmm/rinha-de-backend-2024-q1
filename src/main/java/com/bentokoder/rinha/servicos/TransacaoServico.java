@@ -1,9 +1,10 @@
 package com.bentokoder.rinha.servicos;
 
-import com.bentokoder.rinha.dtos.TransacaoRequestDTO;
+import com.bentokoder.rinha.dtos.TransacaoServicoDTO;
 import com.bentokoder.rinha.entidade.Cliente;
 import com.bentokoder.rinha.entidade.Tipos;
 import com.bentokoder.rinha.entidade.Transacao;
+import com.bentokoder.rinha.exceptions.InsufficientFundsException;
 import com.bentokoder.rinha.repositorio.TransacaoRepositorio;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class TransacaoServico {
         this.transacaoRepositorio = transacaoRepositorio;
     }
 
-    public Cliente executarTransacao(TransacaoRequestDTO data, Integer id){
+    public Cliente executarTransacao(TransacaoServicoDTO data, Integer id){
         Instant now = Instant.now();
         Cliente cliente = this.clienteServico.obterClientePeloId(id);
         if(data.tipo() == Tipos.D)
@@ -34,7 +35,7 @@ public class TransacaoServico {
 
     private void debito(Cliente cliente, Integer valor){
         if(cliente.getSaldo() - valor < -cliente.getLimite()){
-            throw new RuntimeException();
+            throw new InsufficientFundsException();
         }
 
         cliente.setSaldo(cliente.getSaldo() - valor);
