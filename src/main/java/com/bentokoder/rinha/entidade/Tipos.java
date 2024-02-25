@@ -1,5 +1,7 @@
 package com.bentokoder.rinha.entidade;
 
+import com.bentokoder.rinha.exceptions.IllegalArgumentOfTipoException;
+
 public enum Tipos {
     D('d'), C('c');
 
@@ -19,7 +21,7 @@ public enum Tipos {
                 return tipo;
         }
 
-        throw new IllegalArgumentException("Tipo invalido");
+        throw new IllegalArgumentOfTipoException();
     }
 
 }

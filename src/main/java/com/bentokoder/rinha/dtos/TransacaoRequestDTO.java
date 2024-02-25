@@ -1,6 +1,14 @@
 package com.bentokoder.rinha.dtos;
 
-import com.bentokoder.rinha.entidade.Tipos;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public record TransacaoRequestDTO(Integer valor, char tipo, String descricao) {
+public record TransacaoRequestDTO(
+        @NotNull
+        Integer valor,
+        @NotNull
+        Character tipo,
+        @NotNull
+        @Size(min = 1, max = 10, message = "Descrição deve conter no mínimo 1 e no máximo 10 caracteres")
+        String descricao) {
 }

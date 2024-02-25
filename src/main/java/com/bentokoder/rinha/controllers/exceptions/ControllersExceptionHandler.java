@@ -1,6 +1,7 @@
 package com.bentokoder.rinha.controllers.exceptions;
 
 import com.bentokoder.rinha.exceptions.ClientNotFoundException;
+import com.bentokoder.rinha.exceptions.IllegalArgumentOfTipoException;
 import com.bentokoder.rinha.exceptions.InsufficientFundsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,14 @@ public class ControllersExceptionHandler {
     public ResponseEntity<StandardError> clientNotFound(InsufficientFundsException e, HttpServletRequest request){
         String error = "Cliente com saldo insuficiente";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        StandardError err = new StandardError(Instant.now(), status.value(), e.getMessage(), error, request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(IllegalArgumentOfTipoException.class)
+    public ResponseEntity<StandardError> argumentOfTipoIsWrong(IllegalArgumentOfTipoException e, HttpServletRequest request){
+        String error = "Invalido valor para o atributo tipo.";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), e.getMessage(), error, request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
